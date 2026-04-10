@@ -136,6 +136,13 @@ function App() {
                   audio={false}
                   ref={webcamRef}
                   screenshotFormat="image/jpeg"
+                  screenshotQuality={1}
+                  forceScreenshotSourceSize={true}
+                  videoConstraints={{
+                    facingMode: "environment",
+                    width: { ideal: 1920 },
+                    height: { ideal: 1080 }
+                  }}
                   style={{ width: '100%', borderRadius: '12px', border: '1px solid #4f46e5' }}
                 />
                 <button 
@@ -143,7 +150,7 @@ function App() {
                   style={{ marginTop: '1rem', background: '#ec4899' }}
                   onClick={capturePhoto}
                 >
-                  Capture Photo
+                  Capture High-Res Photo
                 </button>
               </div>
             ) : (

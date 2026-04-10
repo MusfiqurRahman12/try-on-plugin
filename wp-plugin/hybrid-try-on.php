@@ -36,7 +36,7 @@ class Hybrid_Try_On {
                 $product_data = array(
                     'id' => $product->get_sku() ? $product->get_sku() : $product->get_id(),
                     'image_url' => wp_get_attachment_url($product->get_image_id()),
-                    'app_url' => 'https://YOUR_VERCEL_PROJECT_URL.vercel.app' // Replace with live Vercel URL
+                    'app_url' => 'https://tryonfeature.vercel.app' // Live Vercel URL
                 );
                 wp_localize_script('hybrid-tryon-js', 'hyridTryOnData', $product_data);
             }
