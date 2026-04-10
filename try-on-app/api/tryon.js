@@ -51,12 +51,19 @@ export default async function handler(req, res) {
     // result.data[0] is the main generated image object { url: string }
     const generatedImageUrl = result.data[0].url;
 
-    console.log("Successfully generated Try-On image via HF Space!");
+    // Fetch the image down from the Hugging Face server so we can proxy it securely as Base64
+    // This solves cross-origin "File not found" issues when trying to download on the client side.
+    const imageResponse = await fetch(generatedImageUrl);
+    const arrayBuffer = await imageResponse.arrayBuffer();
+    const base64String = Buffer.from(arrayBuffer).toString('base64');
+    const finalBase64Url = `data:image/jpeg;base64,${base64String}`;
+
+    console.log("Successfully generated Try-On image via HF Space and converted to Base64!");
 
     return res.status(200).json({
       success: true,
       message: "AI Try-On Image generated successfully by IDM-VTON.",
-      imageUrl: generatedImageUrl, 
+      imageUrl: finalBase64Url, 
     });
 
   } catch (error) {
